@@ -1,0 +1,22 @@
+---
+- name: "Clone kei-s16/dotfiles"
+  ansible.builtin.git:
+    repo: git@github.com:kei-s16/dotfiles.git
+    dest: "/home/{{ ssh_remote_user }}/github/kei-s16/dotfiles"
+    accept_hostkey: true
+
+- name: "Make kei-s16/dotfiles"
+  make:
+    chdir: "/home/{{ ssh_remote_user }}/github/kei-s16/dotfiles"
+    target: all
+
+- name: "Check skk dict file exists"
+  stat:
+    path: "/home/{{ ssh_remote_user }}/.eskk/SKK-JISYO.L"
+  register: skk_dict
+
+- name: "Clone skk dict file"
+  make:
+    chdir: "/home/{{ ssh_remote_user }}/github/kei-s16/dotfiles"
+    target: skk
+  when: not skk_dict.stat.exists

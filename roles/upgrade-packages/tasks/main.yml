@@ -1,0 +1,16 @@
+---
+- name: "Update keyring"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: archlinux-keyring
+    state: latest
+    update_cache: yes
+
+- name: "Run pacman -Syu"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    update_cache: yes
+    upgrade: yes
+  register: result

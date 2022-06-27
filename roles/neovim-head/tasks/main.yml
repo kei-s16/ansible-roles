@@ -1,0 +1,17 @@
+---
+- name: "Clone neovim/neovim"
+  ansible.builtin.git:
+    repo: git@github.com:neovim/neovim.git
+    dest: "/home/{{ ssh_remote_user }}/github/neovim/neovim"
+    accept_hostkey: true
+
+- name: "build neovim"
+  make:
+    chdir: "/home/{{ ssh_remote_user }}/github/neovim/neovim"
+    target: all
+
+- name: "install neovim"
+  become: yes
+  make:
+    chdir: "/home/{{ ssh_remote_user }}/github/neovim/neovim"
+    target: install

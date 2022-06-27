@@ -1,0 +1,42 @@
+---
+- name: "Install base-devel"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: base-devel
+    state: installed
+
+- name: "Install cmake"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: cmake
+    state: installed
+
+- name: "Install unzip"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: unzip
+    state: installed
+
+- name: "Install ninja"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: ninja
+    state: installed
+
+- name: "Install tree-sitter"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: tree-sitter
+    state: installed
+
+- name: "Install curl"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: curl
+    state: installed

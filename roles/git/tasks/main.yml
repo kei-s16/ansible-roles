@@ -1,0 +1,31 @@
+---
+- name: "Install git"
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  community.general.pacman:
+    name: git
+    state: installed
+
+- name: "Check .ssh/config file exists"
+  stat:
+    path: "/home/{{ ssh_remote_user }}/.ssh/config"
+  register: ssh_config
+
+- name: "Create /home/user/.ssh directory"
+  file:
+    path: "/home/{{ ssh_remote_user }}/.ssh"
+    state: directory
+    owner: "{{ ssh_remote_user }}"
+    group: "{{ ssh_remote_user }}"
+    mode: "0700"
+    recurse: true
+  when: not ssh_config.stat.exists
+
+- name: "Copy .ssh/config from host"
+  copy:
+    src: ../files/ssh/config
+    dest: "/home/{{ ssh_remote_user }}/.ssh/config"
+    owner: "{{ ssh_remote_user }}"
+    group: "{{ ssh_remote_user }}"
+    mode: "0644"
+  when: not ssh_config.stat.exists

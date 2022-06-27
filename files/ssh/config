@@ -1,0 +1,8 @@
+StrictHostKeyChecking	no
+ServerAliveInterval   30
+ForwardAgent		yes
+TCPKeepAlive		yes
+
+Host github.com
+	HostName	github.com
+	User		git
